@@ -1,25 +1,16 @@
 // Fix for  https://bugzilla.mozilla.org/show_bug.cgi?id=1607859
 window.browser = window.browser.extension.getBackgroundPage().browser;
 
-const accountList = document.querySelector("#folder-selector");
+const settingsForm = document.querySelector("#settings-form");
 
 function saveOptions(e) {
   e.preventDefault();
-  console.log("save");
-  browser.storage.sync.set({
-	folder: accountList.value
-  });
+  const values = Array.from(document.querySelectorAll("#settings-form select").values())
+	.map(select => { return { "id": select.id, "value": select.value }; } );
+  browser.storage.sync.set({ folders: values });
 }
 
-function restoreOptions() {
-  function setCurrentChoice(result) {
-	  console.log("Got saved folder value: " + result.folder);
-	  accountList.value = result.folder;
-  }
-
-  function onError(error) {
-    console.log(`Error: ${error}`);
-  }
+function restoreOptions(idx, folderSelect) {
   function loadFolders(folderList, parent, prefix = "") {
 	if (!folderList)
 		return;
@@ -29,7 +20,7 @@ function restoreOptions() {
 		var attr = document.createAttribute("value");
 		attr.value = folder.path;
 		f.setAttributeNode(attr);
-		loadFolders(folder.subFolders, parent, prefix + "-");
+		loadFolders(folder.subFolders, parent, prefix + "\xa0");
 		parent.appendChild(f);
 	});
   }
@@ -40,15 +31,52 @@ function restoreOptions() {
 		attr.value = account.name;
 		a.setAttributeNode(attr);
 		loadFolders(account.folders, a); 
-		accountList.appendChild(a);
+		folderSelect.appendChild(a);
 	  });
   }
-	browser.accounts.list().then(loadAccounts, onError);
-		
-  let getting = browser.storage.sync.get("folder");
-  getting.then(setCurrentChoice, onError);
+  
+  browser.accounts.list().then(loadAccounts);
+  browser.storage.sync.get("folders")
+	.then(v => {
+		if (v.folders[idx]) {
+			console.log(v);
+			folderSelect.value = v.folders[idx].value;
+		}
+	} );
 }
 
+function fillForm() {
+	for(let i = 0; i < 10; i++) {
+		const p = document.createElement("p");
+		const label = document.createElement("label");
+		label.appendChild(document.createTextNode(`Folder ${i + 1}: `));
+		const labelAttr = document.createAttribute("for");
+		labelAttr.value = `folder${i}`;
+		label.setAttributeNode(labelAttr);
+		p.appendChild(label);
+		
+		const select = document.createElement("select");
+		const selectId = document.createAttribute("id");
+		selectId.value = labelAttr.value;
+		select.setAttributeNode(selectId);
+		
+		const option = document.createElement("option");
+		option.appendChild(document.createTextNode("None"));
+		option.setAttributeNode(document.createAttribute("value"));
+		select.appendChild(option);
+		p.appendChild(select);
+		
+		restoreOptions(i, select);
+		
+		settingsForm.appendChild(p);
+	}
+	const button = document.createElement("button");
+	const buttonAttr = document.createAttribute("type");
+	buttonAttr.value = "submit";
+	button.setAttributeNode(buttonAttr);
+	button.appendChild(document.createTextNode("Save"));
+	settingsForm.appendChild(button);
+}
 
-document.addEventListener("DOMContentLoaded", restoreOptions);
+document.addEventListener("DOMContentLoaded", fillForm);
 document.querySelector("form").addEventListener("submit", saveOptions);

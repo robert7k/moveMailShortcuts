@@ -1,15 +1,15 @@
 browser.commands.onCommand.addListener(onCommand);
 
 async function onCommand(command) {
-	if (command !== "moveMail") 
-		return;
-	console.log("Received command to move mail.");
-	const setting = await browser.storage.sync.get("folder").catch(console.error);
-	if (!setting || !setting.folder) {
-		console.err("No folder setting found");
+	const folderIndex = command.substring("move_mail_".length);
+	console.log(`Received command to move mail to folder ${folderIndex}.`);
+	const setting = await browser.storage.sync.get("folders").catch(console.error);
+	if (!setting || !setting.folders || !setting.folders[folderIndex] || !setting.folders[folderIndex].value) {
+		console.log("No folder setting found");
 		return;
 	}
-	console.log("Got saved folder value: " + setting.folder);
+	const path = setting.folders[folderIndex].value;
+	console.log(`Got saved folder value: ${path}`);
 
 	const tabs = await browser.tabs.query({
 		active: true,
@@ -21,12 +21,13 @@ async function onCommand(command) {
 		console.log("No message selected");
 		return;
 	}
-	const folder = await findFolder(setting.folder);
+	const folder = await findFolder(path);
 	if (!folder) {
 		console.log(`Folder ${setting.folder} not found`);
 		return;
 	}
 	await browser.messages.move([message.id], folder);
+	console.log("Success");
 }
 
 async function findFolder(path) {
