@@ -1,12 +1,15 @@
 {
-  "name": "MoveMail",
-  "description": "description",
+  "name": "Move Mail Shortcuts",
+  "description": "Allows to assign keyboard shortcuts for moving mails to folders.",
   "version": "1",
   "applications": {
     "gecko": {
-      "id": "sobriety@sample.extensions.thunderbird.net",
+      "id": "mailMoveShortcuts@extension",
       "strict_min_version": "78.0"
     }
+  },
+  "icons": {
+	"48": "img/48.png"
   },
   "permissions": [
     "messagesMove",
