@@ -27,61 +27,61 @@
       "suggested_key": {
         "default": "Alt+1"
       },
-      "description": "Move Mail 1"
+      "description": "Folder 1"
     },
     "move_mail_1": {
       "suggested_key": {
         "default": "Alt+2"
       },
-      "description": "Move Mail 2"
+      "description": "Folder 2"
     },
     "move_mail_2": {
       "suggested_key": {
         "default": "Alt+3"
       },
-      "description": "Move Mail 3"
+      "description": "Folder 3"
     },
     "move_mail_3": {
       "suggested_key": {
         "default": "Alt+4"
       },
-      "description": "Move Mail 4"
+      "description": "Folder 4"
     },
     "move_mail_4": {
       "suggested_key": {
         "default": "Alt+5"
       },
-      "description": "Move Mail 5"
+      "description": "Folder 5"
     },
     "move_mail_5": {
       "suggested_key": {
         "default": "Alt+6"
       },
-      "description": "Move Mail 6"
+      "description": "Folder 6"
     },
     "move_mail_6": {
       "suggested_key": {
         "default": "Alt+7"
       },
-      "description": "Move Mail 7"
+      "description": "Folder 7"
     },
     "move_mail_7": {
       "suggested_key": {
         "default": "Alt+8"
       },
-      "description": "Move Mail 8"
+      "description": "Folder 8"
     },
     "move_mail_8": {
       "suggested_key": {
         "default": "Alt+9"
       },
-      "description": "Move Mail 9"
+      "description": "Folder 9"
     },
     "move_mail_9": {
       "suggested_key": {
         "default": "Alt+0"
       },
-      "description": "Move Mail 10"
+      "description": "Folder 10"
 	}
   },
   "options_ui": {
