@@ -11,16 +11,16 @@ function saveOptions(e) {
 }
 
 function restoreOptions(idx, folderSelect) {
-  function loadFolders(folderList, parent, prefix = "") {
+  function loadFolders(account, folderList, parent, prefix = "") {
 	if (!folderList)
 		return;
 	folderList.forEach(folder => {
 		const f = document.createElement("option");
 		f.appendChild(document.createTextNode(prefix + folder.name));
-		var attr = document.createAttribute("value");
-		attr.value = folder.path;
-		f.setAttributeNode(attr);
-		loadFolders(folder.subFolders, parent, prefix + "\xa0");
+		const valueAttr = document.createAttribute("value");
+		valueAttr.value = JSON.stringify({ folderPath: folder.path, accountId: account.id });
+		f.setAttributeNode(valueAttr);
+		loadFolders(account, folder.subFolders, parent, prefix + "\xa0");
 		parent.appendChild(f);
 	});
   }
@@ -30,7 +30,7 @@ function restoreOptions(idx, folderSelect) {
 		var attr = document.createAttribute("label");
 		attr.value = account.name;
 		a.setAttributeNode(attr);
-		loadFolders(account.folders, a); 
+		loadFolders(account, account.folders, a); 
 		folderSelect.appendChild(a);
 	  });
   }
@@ -39,7 +39,7 @@ function restoreOptions(idx, folderSelect) {
   browser.storage.sync.get("folders")
 	.then(v => {
 		if (v.folders[idx]) {
-			console.log(v);
+			console.log(v.folders[idx]);
 			folderSelect.value = v.folders[idx].value;
 		}
 	} );

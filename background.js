@@ -8,8 +8,8 @@ async function onCommand(command) {
 		console.log("No folder setting found");
 		return;
 	}
-	const path = setting.folders[folderIndex].value;
-	console.log(`Got saved folder value: ${path}`);
+	const folderSetting = setting.folders[folderIndex].value;
+	console.log(`Got saved folder value: ${folderSetting}`);
 
 	const tabs = await browser.tabs.query({
 		active: true,
@@ -21,18 +21,26 @@ async function onCommand(command) {
 		console.log("No message selected");
 		return;
 	}
-	const folder = await findFolder(path);
+	const folder = await findFolder(folderSetting);
 	if (!folder) {
 		console.log(`Folder ${setting.folder} not found`);
 		return;
 	}
 	await browser.messages.move([message.id], folder);
-	console.log("Success");
 }
 
-async function findFolder(path) {
-	const accounts = await browser.accounts.list();
-	return findSubfolder(path, accounts.flatMap(account => account.folders));
+async function findFolder(folderSetting) {
+	try {
+		const setting = JSON.parse(folderSetting);
+		if (setting.accountId) {
+			const account = await browser.accounts.get(setting.accountId);
+			return findSubfolder(setting.folderPath, account.folders);
+		}
+	} catch (ex) {
+		// Saved with previous version which only contains the folder name
+		const accounts = await browser.accounts.list();
+		return findSubfolder(folderSetting, accounts.flatMap(account => account.folders));
+	}
 }
 
 function findSubfolder(path, list) {

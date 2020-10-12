@@ -1,7 +1,7 @@
 {
   "name": "Move Mail Shortcuts",
   "description": "Allows to assign keyboard shortcuts for moving mails to folders.",
-  "version": "1",
+  "version": "2",
   "applications": {
     "gecko": {
       "id": "mailMoveShortcuts@extension",
