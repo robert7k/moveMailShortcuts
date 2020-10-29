@@ -49,7 +49,7 @@ function findSubfolder(path, list) {
 	let result = list.find(f => f.path === path);
 	if (result)
 		return result;
-	for (i = 0; i < list.length; i++) {
+	for (let i = 0; i < list.length; i++) {
 		result = findSubfolder(path, list[i].subFolders);
 		if (result)
 			return result;
