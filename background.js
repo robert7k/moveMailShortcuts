@@ -16,9 +16,9 @@ async function onCommand(command) {
 		currentWindow: true,
 	});
 	let tabId = tabs[0].id;
-	const message = await browser.messageDisplay.getDisplayedMessage(tabId);
-	if (!message) {
-		console.log("No message selected");
+	const messages = await browser.messageDisplay.getDisplayedMessages(tabId);
+	if (!messages) {
+		console.log("No messages selected");
 		return;
 	}
 	const folder = await findFolder(folderSetting);
@@ -26,7 +26,9 @@ async function onCommand(command) {
 		console.log(`Folder ${setting.folder} not found`);
 		return;
 	}
-	await browser.messages.move([message.id], folder);
+	const messageIds = messages.map(m => m.id);
+	console.log(`Message IDs: ${messageIds}`);
+	await browser.messages.move(messageIds, folder);
 }
 
 async function findFolder(folderSetting) {
