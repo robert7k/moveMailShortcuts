@@ -1,7 +1,7 @@
 {
   "name": "Move Mail Shortcuts",
   "description": "Allows to assign keyboard shortcuts for moving mails to folders.",
-  "version": "4",
+  "version": "5",
   "applications": {
     "gecko": {
       "id": "mailMoveShortcuts@extension",
@@ -26,63 +26,123 @@
   "commands": {
     "move_mail_0": {
       "suggested_key": {
-        "default": "Alt+1"
+        "default": "Alt+Shift+1"
       },
-      "description": "Folder 1"
+      "description": "Move to folder 1"
     },
     "move_mail_1": {
       "suggested_key": {
-        "default": "Alt+2"
+        "default": "Alt+Shift+2"
       },
-      "description": "Folder 2"
+      "description": "Move to folder 2"
     },
     "move_mail_2": {
       "suggested_key": {
-        "default": "Alt+3"
+        "default": "Alt+Shift+3"
       },
-      "description": "Folder 3"
+      "description": "Move to folder 3"
     },
     "move_mail_3": {
       "suggested_key": {
-        "default": "Alt+4"
+        "default": "Alt+Shift+4"
       },
-      "description": "Folder 4"
+      "description": "Move to folder 4"
     },
     "move_mail_4": {
       "suggested_key": {
-        "default": "Alt+5"
+        "default": "Alt+Shift+5"
       },
-      "description": "Folder 5"
+      "description": "Move to folder 5"
     },
     "move_mail_5": {
       "suggested_key": {
-        "default": "Alt+6"
+        "default": "Alt+Shift+6"
       },
-      "description": "Folder 6"
+      "description": "Move to folder 6"
     },
     "move_mail_6": {
       "suggested_key": {
-        "default": "Alt+7"
+        "default": "Alt+Shift+7"
       },
-      "description": "Folder 7"
+      "description": "Move to folder 7"
     },
     "move_mail_7": {
       "suggested_key": {
-        "default": "Alt+8"
+        "default": "Alt+Shift+8"
       },
-      "description": "Folder 8"
+      "description": "Move to folder 8"
     },
     "move_mail_8": {
       "suggested_key": {
-        "default": "Alt+9"
+        "default": "Alt+Shift+9"
       },
-      "description": "Folder 9"
+      "description": "Move to folder 9"
     },
     "move_mail_9": {
       "suggested_key": {
-        "default": "Alt+0"
+        "default": "Alt+Shift+0"
       },
-      "description": "Folder 10"
+      "description": "Move to folder 10"
+	},
+    "goto_0": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+1"
+      },
+      "description": "Go to folder 1"
+    },
+    "goto_1": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+2"
+      },
+      "description": "Go to folder 2"
+    },
+    "goto_2": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+3"
+      },
+      "description": "Go to folder 3"
+    },
+    "goto_3": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+4"
+      },
+      "description": "Go to folder 4"
+    },
+    "goto_4": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+5"
+      },
+      "description": "Go to folder 5"
+    },
+    "goto_5": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+6"
+      },
+      "description": "Go to folder 6"
+    },
+    "goto_6": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+7"
+      },
+      "description": "Go to folder 7"
+    },
+    "goto_7": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+8"
+      },
+      "description": "Go to folder 8"
+    },
+    "goto_8": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+9"
+      },
+      "description": "Go to folder 9"
+    },
+    "goto_9": {
+      "suggested_key": {
+        "default": "Ctrl+Alt+0"
+      },
+      "description": "Go to folder 10"
 	}
   },
   "options_ui": {
