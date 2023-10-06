@@ -1,6 +1,6 @@
 browser.commands.onCommand.addListener(onCommand);
 
-async function onCommand(command) {
+async function onCommand(command, tab) {
 	let folderIndex;
 	if (command.startsWith("move_mail"))
 		folderIndex = command.substring("move_mail_".length);
@@ -20,11 +20,6 @@ async function onCommand(command) {
 	const folderSetting = setting.folders[folderIndex].value;
 	console.log(`Got saved folder value: ${folderSetting}`);
 
-	const tabs = await browser.tabs.query({
-		active: true,
-		currentWindow: true,
-	});
-	let tabId = tabs[0].id;
 	const folder = await findFolder(folderSetting);
 	if (!folder) {
 		console.log(`Folder ${setting.folder} not found`);
@@ -32,9 +27,9 @@ async function onCommand(command) {
 	}
 	
 	if (command.startsWith("move_mail"))
-		moveMail(tabId, folder);
+		moveMail(tab.id, folder);
 	else if (command.startsWith("goto_"))
-		goto(tabId, folder);
+		goto(tab.id, folder);
 	else 
 		console.log("Unknown command:" + command);
 }
