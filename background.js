@@ -36,13 +36,24 @@ async function onCommand(command, tab) {
 
 async function moveMail(tabId, folder) {
 	const messages = await browser.messageDisplay.getDisplayedMessages(tabId);
-	if (!messages) {
-		console.log("No messages selected");
-		return;
+    let messageIds;
+	if (messages && messages.length > 0) {
+		messageIds = messages.map(m => m.id);
 	}
-	const messageIds = messages.map(m => m.id);
-	console.log(`Message IDs: ${messageIds}`);
-	await browser.messages.move(messageIds, folder);
+
+    if (!messageIds) {
+        const msglist = await browser.mailTabs.getSelectedMessages(tabId);
+        if (msglist && msglist.messages.length > 0) {
+            messageIds = msglist.messages.map(m => m.id);
+        }
+    }
+
+	if (messageIds) {
+    	console.log(`Message IDs: ${messageIds}`);
+    	await browser.messages.move(messageIds, folder);
+	} else {
+        console.log("No messages selected");
+    }
 }
 
 async function goto(tabId, folder) {
