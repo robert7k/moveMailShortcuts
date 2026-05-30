@@ -10,7 +10,7 @@ async function onCommand(command, tab) {
 		console.log(`Received unknown command: ${command}`);
 		return;
 	}
-	
+
 	console.log(`Received command ${command}.`);
 	const setting = await browser.storage.sync.get("folders").catch(console.error);
 	if (!setting || !setting.folders || !setting.folders[folderIndex] || !setting.folders[folderIndex].value) {
@@ -18,23 +18,24 @@ async function onCommand(command, tab) {
 		return;
 	}
 	const folderSetting = setting.folders[folderIndex].value;
-	console.log(`Got saved folder value: ${folderSetting}`);
+	const folderAction = setting.folders[folderIndex].action;
+	console.log(`Got saved folder value: ${folderSetting}; action="${folderAction}"`);
 
 	const folder = await findFolder(folderSetting);
 	if (!folder) {
 		console.log(`Folder ${setting.folder} not found`);
 		return;
 	}
-	
+
 	if (command.startsWith("move_mail"))
-		moveMail(tab.id, folder);
+		handleMail(tab.id, folder, folderAction);
 	else if (command.startsWith("goto_"))
 		goto(tab.id, folder);
-	else 
+	else
 		console.log("Unknown command:" + command);
 }
 
-async function moveMail(tabId, folder) {
+async function handleMail(tabId, folder, folderAction) {
 	const messages = await browser.messageDisplay.getDisplayedMessages(tabId);
     let messageIds;
 	if (messages && messages.length > 0) {
@@ -49,8 +50,11 @@ async function moveMail(tabId, folder) {
     }
 
 	if (messageIds) {
-    	console.log(`Message IDs: ${messageIds}`);
-    	await browser.messages.move(messageIds, folder);
+		console.log(`Message IDs: ${messageIds}; action: ${folderAction}`);
+		if (folderAction === "copy")
+			await browser.messages.copy(messageIds, folder);
+		else
+			await browser.messages.move(messageIds, folder);
 	} else {
         console.log("No messages selected");
     }
