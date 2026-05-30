@@ -15,6 +15,7 @@
   "permissions": [
     "messagesMove",
     "messagesRead",
+    "messagesUpdate",
     "accountsRead",
     "storage"
   ],

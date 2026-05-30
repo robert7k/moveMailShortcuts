@@ -51,6 +51,12 @@ async function handleMail(tabId, folder, folderAction) {
 
 	if (messageIds) {
 		console.log(`Message IDs: ${messageIds}; action: ${folderAction}; folder: ${folder.id}`);
+		if (folderAction === "move_read") {
+			await Promise.all(
+				messageIds.map((id) => browser.messages.update(id, { read: true }))
+			);
+		}
+
 		if (folderAction === "copy")
 			await browser.messages.copy(messageIds, folder.id);
 		else

@@ -101,11 +101,9 @@ function createActionSelect(folderId) {
 	actionSelectId.value = `action_${folderId}`;
 	actionSelect.setAttributeNode(actionSelectId);
 
-	const moveOption = createOption("Move", "move");
-	actionSelect.appendChild(moveOption);
-
-	const copyOption = createOption("Copy", "copy");
-	actionSelect.appendChild(copyOption);
+	actionSelect.appendChild(createOption("Move", "move"));
+	actionSelect.appendChild(createOption("Move and mark as read", "move_read"));
+	actionSelect.appendChild(createOption("Copy", "copy"));
 	return actionSelect;
 }
 
