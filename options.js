@@ -22,12 +22,8 @@ function restoreOptions(idx, folderSelect, actionSelect) {
   function loadFolders(account, folderList, parent, prefix = "") {
 	if (!folderList)
 		return;
-	folderList.forEach(folder => {
-		const f = document.createElement("option");
-		f.appendChild(document.createTextNode(prefix + folder.name));
-		const valueAttr = document.createAttribute("value");
-		valueAttr.value = JSON.stringify({ folderPath: folder.path, accountId: account.id });
-		f.setAttributeNode(valueAttr);
+	  folderList.forEach(folder => {
+		const f = createOption(prefix + folder.name, JSON.stringify({ folderPath: folder.path, accountId: account.id }));
 		loadFolders(account, folder.subFolders, parent, prefix + "\xa0");
 		parent.appendChild(f);
 	});
@@ -69,9 +65,7 @@ function fillForm() {
 		selectId.value = labelAttr.value;
 		select.setAttributeNode(selectId);
 
-		const option = document.createElement("option");
-		option.appendChild(document.createTextNode("None"));
-		option.setAttributeNode(document.createAttribute("value"));
+		const option = createOption("None");
 		select.appendChild(option);
 		p.appendChild(select);
 
@@ -107,18 +101,26 @@ function createActionSelect(folderId) {
 	actionSelectId.value = `action_${folderId}`;
 	actionSelect.setAttributeNode(actionSelectId);
 
-	const moveOption = document.createElement("option");
-	moveOption.appendChild(document.createTextNode("Move"));
-	const moveAttrValue = document.createAttribute("value");
-	moveAttrValue.value = "move";
-	moveOption.setAttributeNode(moveAttrValue);
+	const moveOption = createOption("Move", "move");
 	actionSelect.appendChild(moveOption);
 
-	const copyOption = document.createElement("option");
-	copyOption.appendChild(document.createTextNode("Copy"));
-	const copyAttrValue = document.createAttribute("value");
-	copyAttrValue.value = "copy";
-	copyOption.setAttributeNode(copyAttrValue);
+	const copyOption = createOption("Copy", "copy");
 	actionSelect.appendChild(copyOption);
 	return actionSelect;
+}
+
+/**
+ * @param {string} label
+ * @param {string | undefined} value
+ * @returns {HTMLOptionElement}
+ */
+function createOption(label, value) {
+	const option = document.createElement("option");
+	option.appendChild(document.createTextNode(label));
+	const valueAttr = document.createAttribute("value");
+	if (value !== undefined) {
+		valueAttr.value = value;
+	}
+	option.setAttributeNode(valueAttr);
+	return option;
 }
