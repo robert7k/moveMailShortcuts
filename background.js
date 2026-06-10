@@ -1,5 +1,9 @@
 browser.commands.onCommand.addListener(onCommand);
 
+/**
+ * @param {string} command
+ * @param {browser.tabs.Tab} tab
+ */
 async function onCommand(command, tab) {
 	let folderIndex;
 	if (command.startsWith("move_mail"))
@@ -35,6 +39,12 @@ async function onCommand(command, tab) {
 		console.log("Unknown command:" + command);
 }
 
+/**
+ * s
+ * @param {number} tabId
+ * @param {browser.folders.MailFolder} folder
+ * @param {"move" | "copy" | "move_read"} folderAction
+ */
 async function handleMail(tabId, folder, folderAction) {
 	const messages = await browser.messageDisplay.getDisplayedMessages(tabId);
     let messageIds;
@@ -72,12 +82,22 @@ async function handleMail(tabId, folder, folderAction) {
     }
 }
 
+/**
+ *
+ * @param {number} tabId
+ * @param {browser.folders.MailFolder} folder
+ */
 async function goto(tabId, folder) {
 	await browser.mailTabs.update(tabId, {
 		displayedFolder: folder
 	});
 }
 
+/**
+ *
+ * @param {string} folderSetting
+ * @returns {Promise<browser.folders.MailFolder | undefined>}
+ */
 async function findFolder(folderSetting) {
 	try {
 		const setting = JSON.parse(folderSetting);
@@ -92,6 +112,12 @@ async function findFolder(folderSetting) {
 	}
 }
 
+/**
+ *
+ * @param {string} path
+ * @param {browser.folders.MailFolder[] | undefined} list
+ * @returns {browser.folders.MailFolder | undefined}
+ */
 function findSubfolder(path, list) {
 	if (!list)
 		return undefined;

@@ -4,6 +4,9 @@ window.browser = window.browser.extension.getBackgroundPage().browser;
 
 const settingsForm = document.querySelector("#settings-form");
 
+/**
+ * @param {Event} e
+ */
 function saveOptions(e) {
   e.preventDefault();
   const values = Array.from(document.querySelectorAll("#settings-form p").values())
@@ -20,7 +23,18 @@ function saveOptions(e) {
   browser.storage.sync.set({ folders: values });
 }
 
+/**
+ *
+ * @param {number} idx
+ * @param {HTMLSelectElement} folderSelect
+ * @param {HTMLSelectElement} actionSelect
+ */
 function restoreOptions(idx, folderSelect, actionSelect) {
+  /**
+     * @param {browser.accounts.MailAccount} account
+     * @param {browser.folders.MailFolder[]} folderList
+     * @param {HTMLOptGroupElement} parent
+     */
   function loadFolders(account, folderList, parent, prefix = "") {
 	if (!folderList)
 		return;
@@ -30,6 +44,10 @@ function restoreOptions(idx, folderSelect, actionSelect) {
 		parent.appendChild(f);
 	});
   }
+  /**
+   *
+   * @param {browser.accounts.MailAccount[]} accounts
+   */
   function loadAccounts(accounts) {
 	  accounts.forEach((account) => {
 		const a = document.createElement("optgroup");
