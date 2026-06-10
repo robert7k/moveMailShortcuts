@@ -1,4 +1,5 @@
 // Fix for  https://bugzilla.mozilla.org/show_bug.cgi?id=1607859
+// @ts-ignore
 window.browser = window.browser.extension.getBackgroundPage().browser;
 
 const settingsForm = document.querySelector("#settings-form");
@@ -8,6 +9,7 @@ function saveOptions(e) {
   const values = Array.from(document.querySelectorAll("#settings-form p").values())
 	  .map(p => {
 		  const folderSelect = p.querySelector("select");
+		  /** @type {HTMLSelectElement} */
 		  const actionSelect = p.querySelector("select.action");
 		  return {
 			  "id": folderSelect.id,
@@ -109,7 +111,7 @@ function createActionSelect(folderId) {
 
 /**
  * @param {string} label
- * @param {string | undefined} value
+ * @param {string} [value]
  * @returns {HTMLOptionElement}
  */
 function createOption(label, value) {
