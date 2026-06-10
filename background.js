@@ -58,9 +58,15 @@ async function handleMail(tabId, folder, folderAction) {
 		}
 
 		if (folderAction === "copy")
-			await browser.messages.copy(messageIds, folder.id);
-		else
-			await browser.messages.move(messageIds, folder.id);
+            // @ts-ignore
+            await browser.messages.copy(messageIds, folder.id, {
+                isUserAction: true
+            });
+        else
+            // @ts-ignore
+			await browser.messages.move(messageIds, folder.id, {
+                isUserAction: true
+            });
 	} else {
         console.log("No messages selected");
     }

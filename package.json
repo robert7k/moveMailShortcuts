@@ -2,6 +2,6 @@
   "name": "movemailshortcuts",
   "private": true,
   "devDependencies": {
-    "@types/thunderbird-webext-browser": "^109.0.0"
+    "@types/thunderbird-webext-browser": "^127.0.0"
   }
 }

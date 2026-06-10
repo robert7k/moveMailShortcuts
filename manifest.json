@@ -5,7 +5,7 @@
   "applications": {
     "gecko": {
       "id": "mailMoveShortcuts@extension",
-      "strict_min_version": "106.0"
+      "strict_min_version": "138.0"
     }
   },
   "homepage_url": "https://github.com/robert7k/moveMailShortcuts",
