@@ -50,8 +50,7 @@ async function handleMail(tabId, folder, folderAction) {
     }
 
 	if (messageIds) {
-
-		console.log(`Message IDs: ${messageIds}; action: ${folderAction}`);
+		console.log(`Message IDs: ${messageIds}; action: ${folderAction}; folder: ${folder.id}`);
 		if (folderAction === "move_read") {
 			await Promise.all(
 				messageIds.map((id) => browser.messages.update(id, { read: true }))
@@ -59,9 +58,9 @@ async function handleMail(tabId, folder, folderAction) {
 		}
 
 		if (folderAction === "copy")
-			await browser.messages.copy(messageIds, folder);
+			await browser.messages.copy(messageIds, folder.id);
 		else
-			await browser.messages.move(messageIds, folder);
+			await browser.messages.move(messageIds, folder.id);
 	} else {
         console.log("No messages selected");
     }
